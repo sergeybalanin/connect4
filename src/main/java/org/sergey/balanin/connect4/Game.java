@@ -1,6 +1,8 @@
 package org.sergey.balanin.connect4;
 
+import java.io.IOException;
+
 public interface Game {
 
-    GameResult play();
+    GameResult play() throws IOException;
 }

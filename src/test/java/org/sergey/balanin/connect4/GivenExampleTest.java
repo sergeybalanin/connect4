@@ -2,38 +2,21 @@ package org.sergey.balanin.connect4;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-public class GivenExampleTest {
+public final class GivenExampleTest extends GameHelper {
+
+    public GivenExampleTest() {
+        super(Connect4.STANDARD_OPTIONS);
+    }
 
     @Test
-    public void scenario() {
-        InputStream userInput = createStdin(new int[]{4, 4, 5, 5, 3, 2, 6});
-        ByteArrayOutputStream consoleOutput = new ByteArrayOutputStream();
-
-        Game game = runGame(userInput, consoleOutput);
-        GameResult result = game.play();
-
+    public void givenExampleScenario() throws IOException {
+        GameResult result = prepareGame(new int[]{4, 4, 5, 5, 3, 2, 6}).play();
         assertEquals(GameResult.RED_WINS, result);
-    }
-
-    private static InputStream createStdin(int[] playerMoves) {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        PrintWriter writer = new PrintWriter(out);
-        for (int playerMove : playerMoves) {
-            writer.print(playerMove);
-            writer.println();
-        }
-        return new ByteArrayInputStream(out.toByteArray());
-    }
-
-    private static Game runGame(InputStream input, OutputStream output) {
-        throw new RuntimeException("Not implemented");
+        assertTrue(consoleOutput().contains("Player 1 [RED] wins!"));
     }
 }
