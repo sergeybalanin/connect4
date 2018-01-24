@@ -31,7 +31,7 @@ final class Board {
     }
 
     boolean canDropTo(int column) {
-        return insertPositions[column] < gameOptions.rows;
+        return column >= 0 && column < columns.length && insertPositions[column] < gameOptions.rows;
     }
 
     GameResult drop(Ball ball, int column) {

@@ -2,7 +2,6 @@ package org.sergey.balanin.connect4;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
@@ -16,14 +15,14 @@ public final class GameTest extends GameHelper {
 
     @Test
     public void shouldWarnAboutFilledColumn() throws IOException {
-        GameResult result = prepareGame(new int[]{0, 0, 0, 0, 0}).play();
+        GameResult result = prepareGame(new int[]{1, 1, 1, 1, 1}).play();
         assertEquals(GameResult.INCOMPLETE, result);
         assertTrue(consoleOutput().contains("This column is full, please choose another"));
     }
 
     @Test
     public void shouldDetectRowWin() throws IOException {
-        GameResult result = prepareGame(new int[]{0, 0, 2, 2, 1}).play();
+        GameResult result = prepareGame(new int[]{1, 1, 3, 3, 2}).play();
         assertEquals(GameResult.RED_WINS, result);
         assertTrue(consoleOutput().contains("|G| |G| |"));
         assertTrue(consoleOutput().contains("|R|R|R| |"));
@@ -31,7 +30,7 @@ public final class GameTest extends GameHelper {
 
     @Test
     public void shouldDetectColumnWin() throws IOException {
-        GameResult result = prepareGame(new int[]{0, 1, 0, 1, 0}).play();
+        GameResult result = prepareGame(new int[]{1, 2, 1, 2, 1}).play();
         assertEquals(GameResult.RED_WINS, result);
         assertTrue(consoleOutput().contains("|R| | | |"));
         assertTrue(consoleOutput().contains("|R|G| | |"));
@@ -40,7 +39,7 @@ public final class GameTest extends GameHelper {
 
     @Test
     public void shouldDetectAscendingWin() throws IOException {
-        GameResult result = prepareGame(new int[]{1, 0, 2, 2, 0, 2, 0, 1}).play();
+        GameResult result = prepareGame(new int[]{2, 1, 3, 3, 1, 3, 1, 2}).play();
         assertEquals(GameResult.GREEN_WINS, result);
         assertTrue(consoleOutput().contains("|R| |G| |"));
         assertTrue(consoleOutput().contains("|R|G|G| |"));
@@ -49,7 +48,7 @@ public final class GameTest extends GameHelper {
 
     @Test
     public void shouldDetectDescendingWin() throws IOException {
-        GameResult result = prepareGame(new int[]{0, 1, 2, 0, 0, 3, 1}).play();
+        GameResult result = prepareGame(new int[]{1, 2, 3, 1, 1, 4, 2}).play();
         assertEquals(GameResult.RED_WINS, result);
         assertTrue(consoleOutput().contains("|R| | | |"));
         assertTrue(consoleOutput().contains("|G|R| | |"));
@@ -58,7 +57,7 @@ public final class GameTest extends GameHelper {
 
     @Test
     public void shouldReportDrawWhenAllMovesAreDoneWithoutWinner() throws IOException {
-        GameResult result = prepareGame(new int[]{0, 1, 2, 3, 1, 0, 3, 2, 1, 0, 3, 2}).play();
+        GameResult result = prepareGame(new int[]{1, 2, 3, 4, 2, 1, 4, 3, 2, 1, 4, 3}).play();
         assertEquals(GameResult.DRAW, result);
         assertTrue(consoleOutput().contains("|G|R|G|R|"));
         assertTrue(consoleOutput().contains("|G|R|G|R|"));

@@ -12,11 +12,13 @@ public final class Connect4 implements Game {
     private final BufferedReader input;
     private final PrintWriter output;
     private final Board gameBoard;
+    private final String chooseColumnPrompt;
 
     Connect4(InputStream inputStream, OutputStream outputStream, GameOptions gameOptions) {
         input = new BufferedReader(new InputStreamReader(inputStream));
         output = new PrintWriter(outputStream, true);
         gameBoard = new Board(gameOptions);
+        chooseColumnPrompt = String.format(" - choose column (1-%d): ", gameOptions.columns);
     }
 
     @Override
@@ -27,7 +29,7 @@ public final class Connect4 implements Game {
         while (result == GameResult.INCOMPLETE) {
             gameBoard.printTo(output);
             output.print(currentBall.prompt);
-            output.print(" - choose column (1-7): ");
+            output.print(chooseColumnPrompt);
             output.flush();
 
             String userText = input.readLine();
@@ -36,7 +38,7 @@ public final class Connect4 implements Game {
                 break;
             }
 
-            int column = Integer.parseInt(userText);
+            int column = Integer.parseInt(userText) - 1;
             if (!gameBoard.canDropTo(column)) {
                 output.println("This column is full, please choose another");
             } else {
